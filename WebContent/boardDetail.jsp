@@ -6,11 +6,14 @@
 	response.setCharacterEncoding("UTF-8");
 	response.setContentType("text/html; charset=UTF-8");
 	
-	String no = request.getParameter("no");
+	String sid = (String) session.getAttribute("id");
+	
+	int no = Integer.parseInt(request.getParameter("no"));
 	String title = "";
-	String author = "";
-	String resdate = "";
 	String content = "";
+	String uname = "";
+	String resdate = "";
+	String author = "";
 	
 	Connection con = null;
 	PreparedStatement pstmt = null;
@@ -24,19 +27,20 @@
 	try {
 		Class.forName("oracle.jdbc.OracleDriver");
 		con = DriverManager.getConnection(url, dbid, dbpw);
-		sql = "select * from boarda where no=?";
+		sql = "select a.no no, a.title title, a.content content, ";
+		sql = sql + "b.name name, a.resdate resdate, a.author author ";
+		sql = sql + "from boarda a inner join membera b ";
+		sql = sql + "on a.author=b.id where a.no=?";
 		pstmt = con.prepareStatement(sql);
-		pstmt.setString(1, no);
-		//select된 데이터가 없으면, rs=null이 됨
+		pstmt.setInt(1, no);
 		rs = pstmt.executeQuery();
-		//int cnt = pstmt.executeUpdate();
 		
 		if(rs.next()){
-			no = rs.getString("no");
 			title = rs.getString("title");
-			author = rs.getString("author");
-			resdate = rs.getString("resdate");
 			content = rs.getString("content");
+			uname = rs.getString("name");
+			resdate = rs.getString("resdate");
+			author = rs.getString("author");
 		}
 	} catch(Exception e){
 		e.printStackTrace();
@@ -72,13 +76,19 @@
     .tb { display:table; margin:40px auto; width:580px; border-collapse:collapse; }
     .tb tr { display:table-row; }
     .tb td, .tb th { display:table-cell; }
-    .tb th { height: 48px; border-bottom:2px solid #000; border-top:2px solid #000; 
-    color:#fff; background-color:#000; }
-    .tb td { height: 48px; border-bottom:1px solid #000; border-top:1px solid #000; border-right:1px solid #000; text-align:center; }
-	.tb tr th:first-child { width:80px; text-align:center; }
-	.tb tr th:nth-child(2) { width:160px; text-align:center; }
-	.tb tr th:nth-child(3) { width:160px; text-align:center; }
-	.tb tr th:last-child { text-align:center; }
+    .tb th { height: 48px; border-bottom:1px solid #fff; color:#fff; background-color:#333; 
+    width:120px; }
+    .tb td { height: 48px; border-bottom:1px solid #333; text-align:left;
+    padding-left:80px; border-right:2px solid #333; }
+    .tb tr:first-child th { border-top:2px solid #333; }
+    .tb tr:first-child td { border-top:2px solid #333; }
+    .tb tr:last-child th { border-bottom:2px solid #333; }
+    .tb tr:last-child td { border-bottom:2px solid #333; }
+	.btn_group { clear:both; width:580px; margin:20px auto; }
+	.btn_group .btn { display:block; float:left; margin:20px; min-width:100px; padding:8px; font-size:14px;
+	line-height:24px; border-radius:36px; border:2px solid #333; text-align:center; }
+	.btn_group .btn.primary { background-color:#333; color:#fff; }
+	.btn_group .btn.primary:hover { background-color:deepskyblue; }
     </style>
     <link rel="stylesheet" href="./css/footer.css">
 </head>
@@ -94,17 +104,17 @@
         <div class="bread">
             <div class="bread_fr">
                 <a href="index.jsp" class="home">HOME</a> &gt;
-                <span class="sel">글 목록</span>
+                <span class="sel">글 상세보기</span>
             </div>
         </div>
         <section class="page">
             <div class="page_wrap">
-                <h2 class="page_title">글 목록</h2>
+                <h2 class="page_title">글 상세보기</h2>
   				<div class="tb_fr">
   					<table class="tb">
   						<tbody>             
 							<tr>
-								<th>번호</th>
+								<th>글 번호</th>
 								<td><%=no %></td>
 							</tr>
 							<tr>
@@ -112,20 +122,28 @@
 								<td><%=title %></td>
 							</tr>
 							<tr>
+								<th>내용</th>
+								<td><%=content %></td>
+							</tr>
+							<tr>
 								<th>작성자</th>
-								<td><%=author %></td>
+								<td><%=uname %></td>
 							</tr>
 							<tr>
 								<th>작성일</th>
 								<td><%=resdate %></td>
 							</tr>
-							<tr>
-								<th>내용</th>
-								<td><%=content %></td>
-							</tr>
 						</tbody> 
 					</table>
-					<a href="boardList.jsp">글 목록</a>
+					<div class="btn_group">
+						<a href="boardList.jsp" class="btn primary">게시판 목록</a>
+						<%
+							if(sid.equals("admin") || sid.equals(author)) {
+						%>
+						<a href='boardModify.jsp?no=<%=no %>' class="btn primary">글 수정</a>
+						<a href='boardDel.jsp?no=<%=no %>' class="btn primary">글 삭제</a>
+						<% } %>
+					</div>
 				</div>
 			</div>
         </section>
