@@ -50,9 +50,9 @@
     .tb { display:table; margin:40px auto; width:580px; border-collapse:collapse; }
     .tb tr { display:table-row; }
     .tb td, .tb th { display:table-cell; }
-    .tb th { height: 48px; border-bottom:2px solid #333; border-top:2px solid #333; 
-    color:#fff; background-color:#333; }
-    .tb td { height: 48px; border-bottom:1px solid #333; text-align:center; }
+    .tb th { height: 48px; border-bottom:2px solid #000; border-top:2px solid #000; 
+    color:#fff; background-color:#000; }
+    .tb td { height: 48px; border-bottom:1px solid #000; text-align:center; }
 	.tb tr th:first-child { width:80px; text-align:center; }
 	.tb tr th:nth-child(2) { width:160px; text-align:center; }
 	.tb tr th:nth-child(3) { width:160px; text-align:center; }
@@ -82,7 +82,7 @@
   					<table class="tb">
   						<thead>
   							<tr>
-  								<th>연번</th>
+  								<th>번호</th>
   								<th>아이디</th>
   								<th>이름</th>
   								<th>가입일</th>

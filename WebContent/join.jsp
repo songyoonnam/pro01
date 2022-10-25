@@ -32,7 +32,7 @@
     .in_dt { background-color:#fff; height:30px; line-height: 32px; width: 180px; 
     color:rgb(0, 0, 0); font-size:14px; text-indent:0.5em; }
     .in_btn { display:block; color: rgb(255, 255, 255); background-color:rgb(0, 0, 0); min-width:120px; height: 32px; 
-    line-height: 32px; border-radius:0; border-color:transparent; float:left; margin-left:80px; margin-right:20px; cursor:pointer; }
+    line-height: 32px; border-radius:0; border-color:transparent; float:left; margin-left:70px; margin-right:20px; cursor:pointer; }
     .in_btn:hover { background-color: greenyellow; color:rgb(0, 0, 0); }
 
 
@@ -88,7 +88,8 @@
                                     <th><label for="id">아이디</label></th>
                                     <td>
                                         <input type="text" id="id" name="id" class="in_dt" style="display:block; float:left;" required autofocus>
-                                        <button type="button" class="in_btn" onclick="idCheck()" style="margin-left:20px">아이디 중복 확인</button>
+                                        <br><br>
+                                        <button type="button" class="in_btn" onclick="idCheck()" style="margin-left:30px;">아이디 중복 확인</button>
                                         <input type="hidden" name="idck" value="no" />
                                     </td>
                                 </tr>
