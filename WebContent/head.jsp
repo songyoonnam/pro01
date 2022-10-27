@@ -20,7 +20,7 @@
    <meta property="og:image:width" content="800">
    <meta property="og:image:height" content="400">
    <!-- 파비콘 -->
-   <link rel="icon" type="image/png" sizes="16x16"  href="/favicons/favicon-16x16.png">
+   <link rel="icon" href="./favicon.ico" type="image/x-icon" sizes="16x16">
    <meta name="msapplication-TileColor" content="#ffffff">
    <meta name="theme-color" content="#ffffff">
    <!-- 각 종 플러그인과 설정 파일 -->

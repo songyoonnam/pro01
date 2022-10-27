@@ -15,7 +15,7 @@
                  서울 강남구 학동로 336 (메이트리 빌딩(matree B/D)) 1층 주식회사 러쉬코리아<br>
                  사업자등록번호:201-81-77964 | 통신판매업신고번호: 2022-서울강남-02857<br> 
              </p>
-             <p class="copyright">COPYRIGHT ⓒ LUSHKOREA.CO.LTD.ALL RIGHTS RESERVED.</p>
+             <p class="copyright">COPYRIGHT ⓒ LUSHKOREA.CO.LTD. ALL RIGHTS RESERVED.</p>
          </div>
          <div class="sel_box">
              <select name="sel" id="sel" class="sel" onchange="sel_link(this)">

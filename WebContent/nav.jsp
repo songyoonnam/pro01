@@ -14,8 +14,8 @@
         	if(id!=null && id.equals("admin")){
         %>
 			<div>
-        		<a href="memList.jsp">회원관리</a>
-        		<a href="boardList.jsp">게시판관리</a>
+        		<a href="memList.jsp">회원 관리</a>
+        		<a href="boardList.jsp">게시판 관리</a>
         		<a href="logout.jsp">로그아웃</a>
         	</div>
         <%

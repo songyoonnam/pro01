@@ -63,8 +63,8 @@
     /* content */
     .vs { clear:both; width: 100%; height:300px; overflow: hidden; }
     .vs img { display:block; width: 100%; height:auto; }
-    .bread { clear:both; width: 100%; line-height: 60px; border-bottom:3px solid #eee; }
-    .bread_fr { width: 1200px; margin: 0 auto; }
+    .bread { clear:both; width: 100%; line-height: 60px; border-bottom:3px solid #fff; }
+    .bread_fr { width: 1200px; margin: 0 auto;  font-size:13px; }
     .page { clear:both; width: 100%; min-height:100vh;}
     .page:after { content:""; display:block; clear:both; }
     .page_wrap { width: 1200px; margin: 0 auto; }
@@ -73,22 +73,23 @@
     .home { color:#333; }
 
     .frm { border:2px solid #333; padding: 24px; width: 780px; margin:50px auto; }
-    .tb { display:table; margin:40px auto; width:580px; border-collapse:collapse; }
+    .tb { display:table; margin:40px auto; width:600px; border-collapse:collapse;  font-size:13px; }
     .tb tr { display:table-row; }
     .tb td, .tb th { display:table-cell; }
-    .tb th { height: 48px; border-bottom:1px solid #fff; color:#fff; background-color:#333; 
+    .tb th { height: 48px; border-bottom:1px solid #000; color:#000; border-left:2px solid #fff; border-right:1px solid #000; background-color:#fff; 
     width:120px; }
-    .tb td { height: 48px; border-bottom:1px solid #333; text-align:left;
-    padding-left:80px; border-right:2px solid #333; }
-    .tb tr:first-child th { border-top:2px solid #333; }
-    .tb tr:first-child td { border-top:2px solid #333; }
-    .tb tr:last-child th { border-bottom:2px solid #333; }
-    .tb tr:last-child td { border-bottom:2px solid #333; }
+    .tb td { height: 48px; border-bottom:1px solid #000; text-align:left;
+    padding-left:80px; border-right:2px solid #fff; }
+    .tb tr:first-child th { border-top:2px solid #000; }
+    .tb tr:first-child td { border-top:2px solid #000; }
+    .tb tr:last-child th { border-bottom:2px solid #000; }
+    .tb tr:last-child td { border-bottom:2px solid #000; }
+    
 	.btn_group { clear:both; width:580px; margin:20px auto; }
-	.btn_group .btn { display:block; float:left; margin:20px; min-width:100px; padding:8px; font-size:14px;
-	line-height:24px; border-radius:36px; border:2px solid #333; text-align:center; }
-	.btn_group .btn.primary { background-color:#333; color:#fff; }
-	.btn_group .btn.primary:hover { background-color:deepskyblue; }
+	.btn_group .btn { display:block; float:left; margin:20px; margin-left:40px; min-width:100px; padding:8px; font-size:13px;
+	line-height:24px; border:1.5px solid; text-align:center; }
+	.btn_group .btn.primary { background-color:transparent; color:#000; }
+	.btn_group .btn.primary:hover { border-color: transparent; background-color:#fff; color:#000; transition-duration:0.8s; }
     </style>
     <link rel="stylesheet" href="./css/footer.css">
 </head>
@@ -114,16 +115,8 @@
   					<table class="tb">
   						<tbody>             
 							<tr>
-								<th>글 번호</th>
-								<td><%=no %></td>
-							</tr>
-							<tr>
 								<th>제목</th>
 								<td><%=title %></td>
-							</tr>
-							<tr>
-								<th>내용</th>
-								<td><%=content %></td>
 							</tr>
 							<tr>
 								<th>작성자</th>
@@ -133,16 +126,20 @@
 								<th>작성일</th>
 								<td><%=resdate %></td>
 							</tr>
+							<tr>
+								<th>내용</th>
+								<td><%=content %></td>
+							</tr>
 						</tbody> 
 					</table>
 					<div class="btn_group">
-						<a href="boardList.jsp" class="btn primary">게시판 목록</a>
 						<%
 							if(sid.equals("admin") || sid.equals(author)) {
 						%>
-						<a href='boardModify.jsp?no=<%=no %>' class="btn primary">글 수정</a>
-						<a href='boardDel.jsp?no=<%=no %>' class="btn primary">글 삭제</a>
+						<a href='boardModify.jsp?no=<%=no %>' class="btn primary">수정</a>
+						<a href='boardDel.jsp?no=<%=no %>' class="btn primary">삭제</a>
 						<% } %>
+						<a href="boardList.jsp" class="btn primary">목록</a>
 					</div>
 				</div>
 			</div>
