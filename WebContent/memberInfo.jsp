@@ -86,9 +86,9 @@
     .tb { display:table; margin:40px auto; width:580px; border-collapse:collapse; font-size:13px;}
     .tb tr { display:table-row; }
     .tb td, .tb th { display:table-cell; }
-    .tb th { height: 48px; border-bottom:2px solid #000; border-top:2px solid #000; 
-    color:#fff; background-color:#000; }
-    .tb td { height: 48px; border-bottom:1px solid #000; border-top:1px solid #000; border-right:1px solid #000; text-align:center; }
+    .tb th { height: 48px; border-bottom:1px solid #000; border-top:1px solid #000; 
+    color:#000; border-right:1px solid #000; background-color:#fff; }
+    .tb td { height: 48px; border-bottom:1px solid #000; border-top:1px solid #000; border-right:1px solid #fff; text-align:center; }
 	.tb tr th:first-child { width:80px; text-align:center; }
 	.tb tr th:nth-child(2) { width:160px; text-align:center; }
 	.tb tr th:nth-child(3) { width:160px; text-align:center; }

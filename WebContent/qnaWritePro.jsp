@@ -8,23 +8,29 @@
 	response.setContentType("text/html; charset=UTF-8");
 
 	//보내온 데이터 받아오기
-	int parno = Integer.parseInt(request.getParameter("no"));	
+	String title = request.getParameter("title");
+	String content = request.getParameter("content");
+	String author = request.getParameter("author");
+	String sec = request.getParameter("sec");
+	int lev = Integer.parseInt(request.getParameter("lev"));
 	int cnt = 0;
 %>
 <!-- DB 생성 및 연결 -->
 <%@ include file="connectionPool2.conf" %>
 <%
-	//SQL 작성 및 실행
-	sql = "delete from faqa where parno=?";
+	//질문 글 등록
+	sql = "insert into qnaa values (qseq.nextval, ?, ?, ?, sysdate, 0, qseq.currval, ?)";
 	pstmt = con.prepareStatement(sql);
-	pstmt.setInt(1, parno);
+	pstmt.setString(1, title);
+	pstmt.setString(2, content);
+	pstmt.setString(3, author);
+	pstmt.setString(4, sec);
 	cnt = pstmt.executeUpdate();
-	
 	//반환된 결과에 따라 분기
 	if(cnt>=1){
-		response.sendRedirect("faq.jsp");
+		response.sendRedirect("qnaList.jsp");
 	} else {
-		response.sendRedirect("faqDetail.jsp?no="+parno);
+		response.sendRedirect("qnaWrite.jsp");
 	}
 %>
 <!-- DB 닫기 -->

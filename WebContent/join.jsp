@@ -114,7 +114,7 @@
                                 <tr>
                                     <th><label for="email">이메일</label></th>
                                     <td>
-                                        <input type="email" id="email" name="email" class="in_dt" placeholder="이메일 입력" required>
+                                        <input type="email" id="email" name="email" class="in_dt" placeholder="네이버 이메일 입력" pattern=".+@naver\.com" required>
                                     </td>
                                 </tr>
                                 <tr>

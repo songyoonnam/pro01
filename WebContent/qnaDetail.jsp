@@ -44,13 +44,15 @@
     .tb tr:last-child th { border-bottom:2px solid #000; }
     .tb tr:last-child td { border-bottom:2px solid #000; }
     
-	.btn_group { clear:both; width:580px; margin:20px auto; }
-	.btn_group .btn { display:block; float:left; margin:20px; margin-left:40px; min-width:100px; padding:8px; font-size:13px;
+    .center { text-align: center; font-size:13px;}
+    
+	.btn_group { clear:both; width:580px; margin:20px auto;}
+	.btn_group .btn { display:block; float:left; margin:20px; margin-left:40px; min-width:65px; padding:8px; font-size:13px;
 	line-height:24px; border:1.5px solid; text-align:center; }
-	.btn_group .btn.primary { background-color:transparent; color:#000; }
+	.btn_group .btn.primary { background-color:transparent; color:#000; margin-left:30px;}
 	.btn_group .btn.primary:hover { border-color: transparent; background-color:#fff; color:#000; transition-duration:0.8s; }
     </style>
-    <link rel="stylesheet" href="./css/footer.css">
+<link rel="stylesheet" href="./css/footer.css">
 </head>
 <body>
 <%@ include file="connectionPool.conf" %>
@@ -65,16 +67,16 @@
         <div class="bread">
             <div class="bread_fr">
                 <a href="index.jsp" class="home">HOME</a> &gt;
-                <span class="sel">FAQ 상세보기</span>
+                <span class="sel">QnA 상세보기</span>
             </div>
         </div>
         <section class="page">
             <div class="page_wrap">
-                <h2 class="page_title">FAQ</h2>
+                <h2 class="page_title">QnA</h2>
   				<div class="tb_fr">
   					<table class="tb">
 <%
-		sql = "select * from faqa where no=?";
+		sql = "select * from qnaa where no=?";
 		pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, no);
 		rs = pstmt.executeQuery();
@@ -83,26 +85,50 @@
 %>
   						<tbody>  
 							<tr>
-								<th>질문</th>
+								<th>제목</th>
 								<td><%=rs.getString("title") %></td>
 							</tr>
 							<tr>
-								<th>답변</th>
+								<th>작성자</th>
+								<td><%=rs.getString("author") %></td>
+							</tr>
+							<tr>
+								<th>작성일</th>
+								<td><%=rs.getString("resdate") %></td>
+							</tr>
+							<tr>
+								<th>내용</th>
 								<td><%=rs.getString("content") %></td>
 							</tr>
 						</tbody> 
-					<%
-							}
-					%>
 					</table>
 					<div class="btn_group">
-						<a href="faq.jsp" class="btn primary">목록</a>
 						<%
 							if(sid.equals("admin")) {
+								if(rs.getInt("lev")==0){
 						%>
-						<a href='faqModify.jsp?no=<%=no %>' class="btn primary">수정</a>
-						<a href='faqDel.jsp?no=<%=no %>' class="btn primary">삭제</a>
-						<% } %>
+							<a href='replyWrite.jsp?parno=<%=no %>' class="btn primary">답변하기</a>
+							<a href='qnaModify.jsp?no=<%=no %>' class="btn primary">수정</a>
+							<a href='qnaDel.jsp?parno=<%=no %>' class="btn primary">삭제</a>
+						<%
+								} else {
+						%>
+							<a href='replyModify.jsp?no=<%=no %>' class="btn primary">수정</a>
+							<a href='replyDel.jsp?no=<%=no %>' class="btn primary">삭제</a>
+						<%
+								}
+							} else if(sid.equals(rs.getString("author"))){
+						%>
+							<a href='qnaModify.jsp?no=<%=no %>' class="btn primary">수정</a>
+							<a href='qnaDel.jsp?parno=<%=no %>' class="btn primary">삭제</a>
+						<%		
+							} else {
+						%>
+							<p style="clear:both" class="center">글 작성자가 아닙니다</p>
+						<%
+							}
+						%>
+					    <a href="qnaList.jsp" class="btn primary">목록</a>
 					</div>
 				</div>
 			</div>
@@ -112,6 +138,9 @@
 		<%@ include file="footer.jsp" %>
     </footer>
 </div>
+					<%
+							}
+					%>
 <%@ include file="connectionClose2.conf" %>
 </body>
 </html>

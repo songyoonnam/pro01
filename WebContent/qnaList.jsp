@@ -6,6 +6,9 @@ request.setCharacterEncoding("UTF-8");
 response.setCharacterEncoding("UTF-8");
 response.setContentType("text/html; charset=UTF-8");
 String uid = (String) session.getAttribute("id");
+if(uid==null){
+	uid ="guest";
+}
 Connection con = null;
 PreparedStatement pstmt = null;
 ResultSet rs = null;
@@ -14,24 +17,13 @@ String dbid = "test3";
 String dbpw = "9876";
 String sql = "";
 int cnt = 0;
-int amount = 0;
-int curPage = 1;
-int pageCount = 1;
-int startNum = 1;
-int endNum = 10;
-
 try {
 	Class.forName("oracle.jdbc.OracleDriver");
 	con = DriverManager.getConnection(url, dbid, dbpw);
-	//게시글 수 카운트
-	sql = "select count(*) cnt from boarda";
+	//질문 및 답변 목록
+	sql = "select * from qnaa order by parno desc, lev asc, no asc";
 	pstmt = con.prepareStatement(sql);
 	rs = pstmt.executeQuery();
-	if(rs.next()){
-		amount = rs.getInt("cnt");
-	}
-	rs.close();
-	pstmt.close();
 %>
 <!DOCTYPE html>
 <html>
@@ -69,6 +61,9 @@ try {
 	
 	.page_nation_fr {text-align:center; font-size:13px; }
 	
+	.tb tr td .sec1 { padding-left:25px; background-image:url("./img/icon/key.svg"); background-size:20px 20px; background-repeat:no-repeat; background-position:2px center; }
+	.tb tr td .sec2 { padding-left:60px; background-image:url("./img/icon/key.svg"); background-size:20px 20px; background-repeat:no-repeat; background-position:30px center; }
+	
 	a:link {
  	 color : #000;
 	}
@@ -89,39 +84,27 @@ try {
 	.btn_group .btn.primary:hover { border-color: transparent; background-color:#fff; color:#000; transition-duration:0.8s;}
 	
     </style>
-    <link rel="stylesheet" href="./css/footer.css">
+<title>QnA</title>
+<link rel="stylesheet" href="./css/footer.css">
 </head>
 <body>
-<div class="wrap">
-    <header class="hd">
-		<%@ include file="nav.jsp" %>
-    </header>
-    <div class="content">
-        <figure class="vs">
+<header class="hd">
+	<%@ include file="nav.jsp" %>
+</header>
+<div class="content">
+      <figure class="vs">
             <img src="./img/water.jpg" alt="비주얼">
         </figure>
         <div class="bread">
             <div class="bread_fr">
                 <a href="index.jsp" class="home">HOME</a> &gt;
-                <span class="sel">게시판</span>
+                <span class="sel">QnA</span>
             </div>
         </div>
-        
-<%
-	if(request.getParameter("curPage")!=null){
-		curPage = Integer.parseInt(request.getParameter("curPage"));
-	}
-	
-	pageCount = (amount % 10==0) ? (amount / 10) : (amount / 10) + 1;
-	startNum = curPage * 10 - 9;
-	endNum = curPage * 10;
-	if(endNum>amount){
-		endNum = amount;
-	}
-%>
         <section class="page">
             <div class="page_wrap">
-                <h2 class="page_title">글 목록</h2>
+                <h2 class="page_title">QnA</h2>
+  				<div class="tb_fr">
   					<table class="tb">
   						<thead>
   							<tr>
@@ -133,39 +116,75 @@ try {
   						</thead>
   						<tbody>         
 <%
-		pstmt = null;
-		rs = null;
-		//게시글 검색
-		sql = "select no, title, content, author, resdate from "; 
-		sql = sql +	"(select rownum rn, no, title, content, author, resdate from boarda order by no desc) t1 ";
-		sql = sql + "where t1.rn between ? and ?";
-		pstmt = con.prepareStatement(sql);
-		pstmt.setInt(1, startNum);
-		pstmt.setInt(2, endNum);
-		rs = pstmt.executeQuery();
-		cnt = amount - (curPage-1) * 10;
 		while(rs.next()){
 			//작성일의 날짜 데이터를 특정 문자열 형식으로 변환
 			SimpleDateFormat yymmdd = new SimpleDateFormat("yyyy-MM-dd");
 			String date = yymmdd.format(rs.getDate("resdate"));
 %>
 			<tr>
-					<td><%=cnt %></td>
 					<td>
-					<% if(uid!=null) { %>
-						<a href='boardDetail.jsp?no=<%=rs.getInt("no") %>'><%=rs.getString("title") %></a>
-					<% } else { %>
-						<span><%=rs.getString("title") %></span>
-					<% } %>
+						<%
+							if(rs.getInt("lev")==0) {
+								cnt++;
+								out.println("<span>"+cnt+"</span>");
+							}
+						%>
+					</td>
+					<td>
+
+					<% 
+						if(rs.getInt("lev")==0) {
+							if(rs.getString("sec").equals("Y")) {
+								if(uid.equals(rs.getString("author")) || uid.equals("admin")){
+					%>
+									<a href='qnaDetail.jsp?no=<%=rs.getInt("no") %>' class="sec1"><%=rs.getString("title") %></a>
+					<%
+								} else {
+					%>	
+									<span class="sec1"><%=rs.getString("title") %></span>
+					<%
+								}
+							} else if(rs.getString("sec").equals("N") && uid!="guest"){
+					%>	
+									<a href='qnaDetail.jsp?no=<%=rs.getInt("no") %>'><%=rs.getString("title") %></a>
+					<%
+							} else {
+					%>	
+									<span><%=rs.getString("title") %></span>
+					<%
+							}
+					%>
+					<% 
+						} else {
+							if(rs.getString("sec").equals("Y")) {
+								if(uid.equals(rs.getString("author")) || uid.equals("admin")){
+					%>
+									<a href='qnaDetail.jsp?no=<%=rs.getInt("no") %>' style="padding-left:60px;" class="sec2"><%=rs.getString("title") %></a>
+					<%
+								} else {
+					%>
+									<span style="padding-left:60px;" class="sec2"><%=rs.getString("title") %></span>				
+					<%
+								}		
+							} else if(rs.getString("sec").equals("N") && uid!="guest"){
+					%>
+								<a href='qnaDetail.jsp?no=<%=rs.getInt("no") %>' style="padding-left:60px;"><%=rs.getString("title") %></a>						
+					<%
+							} else {
+					%>
+						 		<span style="padding-left:60px;"><%=rs.getString("title") %></span>
+					<%
+							}
+						} 
+					%>
 					</td>
 					<td><%=rs.getString("author") %></td>
 					<td><%=date %></td>
 			</tr>
 <%		
-			cnt--;
 		}
 	} catch(Exception e) {
-		
+		e.printStackTrace();
 	} finally {
 		rs.close();
 		pstmt.close();
@@ -174,26 +193,13 @@ try {
 %>
 						</tbody> 
 					</table>
-				<div class="page_nation_fr">
-				<% 
-				   for(int i=1;i<=pageCount;i++) { 
-					   if(i==curPage) {
-				%>
-					<span><strong><%=i %></strong>&nbsp;</span>
-				<% 
-					   } else {
-				%>
-					<a href="boardList.jsp?curPage=<%=i %>"><%=i %>&nbsp;</a>
-				<%		   
-					   }
-					} 
-				%>
-				</div>
-				<div class="btn_group">
-					<% if(uid!=null) { %>
-					<a href="boardWrite.jsp" class="btn primary">글쓰기</a>
-					<% } %>
-				</div>	
+					<div class="btn_group">
+						<% if(uid!="guest") { %>
+						<a href="qnaWrite.jsp" class="btn primary">문의하기</a>
+						<% } else { %>
+						<p style="clear:both;">회원가입 후 로그인하셔야 문의내용 및 답변을 보실 수 있습니다</p>
+						<% } %>
+					</div>	
 			</div>
 		</div>
 	</section>

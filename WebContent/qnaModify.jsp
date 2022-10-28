@@ -1,8 +1,54 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
 <%
-	String sid = (String) session.getAttribute("id");
+	request.setCharacterEncoding("UTF-8");
+	response.setCharacterEncoding("UTF-8");
+	response.setContentType("text/html; charset=UTF-8");
+	
+	String sid = (String) request.getAttribute("id");
+	
 	int no = Integer.parseInt(request.getParameter("no"));
+	String title = "";
+	String content = "";
+	String uname = "";
+	String resdate = "";
+	String author = "";
+	
+	Connection con = null;
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
+	
+	String url = "jdbc:oracle:thin:@localhost:1521:xe";
+	String dbid = "test3";
+	String dbpw = "9876";
+	String sql = "";
+	
+	try {
+		Class.forName("oracle.jdbc.OracleDriver");
+		con = DriverManager.getConnection(url, dbid, dbpw);
+		sql = "select a.no no, a.title title, a.content content, ";
+		sql = sql + "b.name name, a.resdate resdate, a.author author ";
+		sql = sql + "from qnaa a inner join membera b ";
+		sql = sql + "on a.author=b.id where a.no=?";
+		pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, no);
+		rs = pstmt.executeQuery();
+		
+		if(rs.next()){
+			title = rs.getString("title");
+			content = rs.getString("content");
+			uname = rs.getString("name");
+			resdate = rs.getString("resdate");
+			author = rs.getString("author");
+		}
+	} catch(Exception e){
+		e.printStackTrace();
+	} finally {
+		rs.close();
+		pstmt.close();
+		con.close();
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -70,46 +116,40 @@
         <section class="page">
             <div class="page_wrap">
                 <h2 class="page_title">FAQ 수정</h2>
-			<%@ include file="connectionPool.conf" %>
-			<%
-				sql = "select * from faqa where no=?";
-				pstmt = con.prepareStatement(sql);
-				pstmt.setInt(1, no);
-				rs = pstmt.executeQuery();
-				if(rs.next()){
-			%>
-			<div class="frm1">
-				<form name="frm" class="frm" action="faqModifyPro.jsp" method="post">
-					<input type="hidden" name="no" id="no" value='<%=rs.getInt("no") %>' required>
-					<table class="tb">
-						<tbody>
-							<tr>
-								<th><label for="title">제목</label></th>
-								<td><input type="text" name="title" id="title" placeholder="제목 입력" class="in_data" value='<%=rs.getString("title") %>' required></td>
-							</tr>
-							<tr>
-								<th><label for="content">내용</label></th>
-								<td>
-									<textarea cols="100" rows="6" name="content" id="content" class="in_data2"><%=rs.getString("content") %></textarea>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				<%
-					}
-				%>
-				<%@ include file="connectionClose2.conf" %>
-					<div class="btn_group">
-						<button type="submit" class="btn primary">수정</button>
-						<a href="faq.jsp" class="btn primary">목록</a>
-					</div>
-				</form>
+  				<div class="frm1">
+  					<form name="frm" action="qnaModifyPro.jsp" method="post" class="frm">
+	  					<table class="tb">
+	  						<tbody>
+	  							<tr>
+									<th>번호</th>
+									<td>&nbsp;<%=no %>
+									<input type="hidden" name="no" id="no" value="<%=no %>"> 
+									</td>
+								</tr>             
+								<tr>
+									<th>질문</th>
+									<td><input type="text" name="title" id="title" value="<%=title %>" class="in_data" required /></td>
+								</tr>
+								<tr>
+									<th>답변</th>
+									<td>
+										<textarea cols="100" rows="8" name="content" id="content"><%=content %></textarea>
+									</td>
+								</tr>
+							</tbody> 
+						</table>
+						<div class="btn_group">
+							<button type="submit" class="btn primary">수정</button>
+							<a href="qnaList.jsp" class="btn primary">목록</a>
+						</div>
+					</form>
+				</div>
 			</div>
-		</div>
-	</section>
+        </section>
+    </div>
+    <footer class="ft">
+		<%@ include file="footer.jsp" %>
+    </footer>
 </div>
-<footer class="ft">
-	<%@ include file="footer.jsp" %>
-</footer>
 </body>
 </html>
