@@ -71,15 +71,19 @@
 					<table class="tb">
 						<tbody>
 							<tr>
+								<th><label for="title">제목</label></th>
+								<td><input type="text" name="title" id="title" placeholder="제목을 입력하세요" maxlength="100" class="in_data" required></td>
+							</tr>
+							<tr>
 								<th><label for="content">질문</label></th>
 								<td>
-									<textarea cols="100" rows="12" name="content" id="content" class="in_data2" placeholder="질문을 입력하세요"></textarea>
+									<textarea cols="100" rows="12" name="content" id="content" class="in_data2" placeholder="질문을 입력하세요" maxlength="100" required></textarea>
 								</td>
 							</tr>
 							<tr>
 								<th><label for="content2">답변</label></th>
 								<td>
-									<textarea cols="100" rows="12" name="content2" id="content2" class="in_data2" placeholder="답변을 입력하세요"></textarea>
+									<textarea cols="100" rows="12" name="content2" id="content2" class="in_data2" placeholder="답변을 입력하세요" maxlength="600" required></textarea>
 								</td>
 							</tr>
 						</tbody>

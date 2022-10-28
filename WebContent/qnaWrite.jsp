@@ -72,7 +72,7 @@
 						<tbody>
 							<tr>
 								<th><label for="title">문의사항</label></th>
-								<td><input type="text" name="title" id="title" placeholder="문의사항 입력" class="in_data" required></td>
+								<td><input type="text" name="title" id="title" placeholder="문의사항 입력" maxlength="100" class="in_data" required></td>
 							</tr>
 							<tr>
 								<th><label for="author">작성자</label></th>
@@ -84,7 +84,7 @@
 							<tr>
 								<th><label for="content">문의 내용</label></th>
 								<td>
-									<textarea cols="100" rows="10" name="content" id="content" placeholder="문의 내용 입력" class="in_data2"></textarea>
+									<textarea cols="100" rows="10" name="content" id="content" placeholder="문의 내용 입력" maxlength="600" required class="in_data2"></textarea>
 								</td>
 							</tr>
 							<tr>

@@ -87,7 +87,7 @@
                                 <tr>
                                     <th><label for="id">아이디</label></th>
                                     <td>
-                                        <input type="text" id="id" name="id" class="in_dt" style="display:block; float:left;" placeholder="아이디 입력" required autofocus>
+                                        <input type="text" id="id" name="id" class="in_dt" style="display:block; float:left;" placeholder="아이디 입력" maxlength="12" pattern="[a-z0-9]{8,12}" required autofocus>
                                         <br><br><br>
                                         <button type="button" class="in_btn" onclick="idCheck()" style="margin-left:30px;">아이디 중복 확인</button>
                                         <input type="hidden" name="idck" value="no" />
@@ -96,19 +96,19 @@
                                 <tr>
                                     <th><label for="pw">비밀번호</label></th>
                                     <td>
-                                        <input type="password" id="pw" name="pw" class="in_dt " placeholder="비밀번호 입력" required>
+                                        <input type="password" id="pw" name="pw" class="in_dt " placeholder="비밀번호 입력" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$" required>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th><label for="pw2">비밀번호 확인</label></th>
                                     <td>
-                                        <input type="password" id="pw2" name="pw2" class="in_dt" placeholder="비밀번호 입력" required>
+                                        <input type="password" id="pw2" name="pw2" class="in_dt" placeholder="비밀번호 입력" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$" required>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th><label for="name">이름</label></th>
                                     <td>
-                                        <input type="text" id="name" name="name" class="in_dt" placeholder="이름 입력" required>
+                                        <input type="text" id="name" name="name" class="in_dt" placeholder="한글 이름 입력" pattern="\[^(가-힣)]\" required>
                                     </td>
                                 </tr>
                                 <tr>
@@ -120,7 +120,7 @@
                                 <tr>
                                     <th><label for="tel">연락처</label></th>
                                     <td>
-                                        <input type="tel" id="tel" name="tel" class="in_dt" placeholder="연락처 입력" required>
+                                        <input type="tel" id="tel" name="tel" class="in_dt" placeholder="연락처 입력" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" required>
                                     </td>
                                 </tr>
                                 <tr>

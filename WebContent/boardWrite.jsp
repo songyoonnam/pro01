@@ -72,7 +72,7 @@
 	  						<tbody>             
 								<tr>
 									<th>제목</th>
-									<td><input type="text" name="title" id="title" class="in_data" placeholder="제목을 입력하세요" required /></td>
+									<td><input type="text" name="title" id="title" class="in_data" placeholder="제목을 입력하세요" maxlength="100" required></td>
 								</tr>
 								<tr>
 									<th>작성자</th>
@@ -83,7 +83,7 @@
 								<tr>
 									<th>내용</th>
 									<td>
-										<textarea cols="100" rows="20" name="content" id="content" placeholder="내용을 입력하세요"></textarea>
+										<textarea cols="100" rows="20" name="content" id="content" placeholder="내용을 입력하세요" maxlength="600" required></textarea>
 									</td>
 								</tr>
 							</tbody> 

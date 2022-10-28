@@ -16,36 +16,38 @@
     /* content */
     .vs { clear:both; width: 100%; height:300px; overflow: hidden; }
     .vs img { display:block; width: 100%; height:auto; }
-    .bread { clear:both; width: 100%; line-height: 60px; border-bottom:3px solid #eee; }
-    .bread_fr { width: 1200px; margin: 0 auto; }
+    .bread { clear:both; width: 100%; line-height: 60px; border-bottom:3px solid #fff; }
+    .bread_fr { width: 1200px; margin: 0 auto; font-size:13px;}
     .page { clear:both; width: 100%; min-height:100vh;}
     .page:after { content:""; display:block; clear:both; }
     .page_wrap { width: 1200px; margin: 0 auto; }
 
     .page_title { padding-top: 1em; text-align: center; }
-    .home { color:#333; }
+    .home { color:#000; }
 
     .frm1 { padding: 24px; width: 960px; margin:50px auto; }
-    .tb { display:table; margin:40px auto; width:900px; border-collapse:collapse; }
+    .tb { display:table; margin:40px auto; width:900px; border-collapse:collapse; font-size:13px; color:#000; }
     .tb tr { display:table-row; }
     .tb td, .tb th { display:table-cell; }
-    .tb th { height: 48px; border-bottom:1px solid #fff; color:#fff; background-color:#333; 
+    .tb th { height: 48px; border-bottom:1px solid #000; border-right: 1px solid #000; color:#000; background-color:#fff; 
     width:150px; box-sizing:border-box; }
-    .tb td { height: 48px; border-bottom:1px solid #333; text-align:left;
-     border-right:2px solid #333;
+    .tb td { height: 48px; border-bottom:1px solid #000; text-align:left;
+     border-right:1px solid #000;
     width:600px; box-sizing:border-box; padding:8px; }
-    .tb tr:first-child th { border-top:2px solid #333; }
-    .tb tr:first-child td { border-top:2px solid #333; }
-    .tb tr:last-child th { border-bottom:2px solid #333; }
-    .tb tr:last-child td { border-bottom:2px solid #333; }
+    .tb tr:first-child th { border-top:1px solid #000; }
+    .tb tr:first-child td { border-top:1px solid #000; }
+    .tb tr:last-child th { border-bottom:1px solid #000; }
+    .tb tr:last-child td { border-bottom:1px solid #000; }
 	.btn_group { clear:both; width:940px; margin:20px auto; }
-	.btn_group .btn { display:block; float:left; margin:20px; min-width:100px; padding:8px; font-size:14px;
-	line-height:24px; border-radius:36px; border:2px solid #333; text-align:center; }
-	.btn_group .btn.primary { background-color:#333; color:#fff; }
-	.btn_group .btn.primary:hover { background-color:deepskyblue; }
+	.btn_group .btn { display:block; float:left; margin:20px; min-width:100px; padding:8px; font-size:13px;
+	line-height:24px; border:1px solid #000; text-align:center; }
+	.btn_group .btn.primary { background-color:#fff; color:#000; margin-left:240px; }
+	.btn_group .btn.primary:hover { background-color:#fff; color:#fff;  }
 	.in_data { display:block; float:left; line-height:36px; padding-left:6px; 
-	min-width:740px; }
-	textarea { padding:6px; }
+	min-width:740px; border-color:transparent; color:#000;}
+	textarea { padding:6px; border-color:transparent;}
+	.center {text-align:center; font-size:13px; }
+	
     </style>
     <link rel="stylesheet" href="./css/footer.css">
 	<title>질문하기</title>
@@ -66,8 +68,8 @@
        </div>
        <section class="page">
            <div class="page_wrap">
-               <h2 class="page_title">온라인 문의</h2>
-               <p style="clear:both">작성하신 문의 내용은 3일 이내 답변드립니다.</p>
+               <h2 class="page_title">온라인 문의</h2><br>
+               <p style="clear:both" class="center">작성하신 문의사항은 3일 이내 답변드립니다</p>
 			<%@ include file="connectionPool.conf" %>
 			<%
 			sql = "select * from membera where id=?";
@@ -85,7 +87,7 @@
 					<table class="tb">
 						<tbody>
 							<tr>
-								<th><label for="author">작성자명</label></th>
+								<th><label for="author">이름</label></th>
 								<td>
 									<input type="text" name="name" id="name" class="in_data" value='<%=rs.getString("name") %>' required>
 								</td>
@@ -93,30 +95,30 @@
 							<tr>
 								<th><label for="from">이메일 주소</label></th>
 								<td>
-									<input type="email" name="from" id="from" class="in_data" value='<%=rs.getString("email") %>' required >
+									<input type="email" name="from" id="from" class="in_data" value='<%=rs.getString("email") %>' required>
 								</td>
 							</tr>
 							<tr>
 								<th><label for="tel">연락처</label></th>
 								<td>
-									<input type="tel" name="tel" id="tel" class="in_data" value='<%=rs.getString("tel") %>' required >
+									<input type="tel" name="tel" id="tel" class="in_data" value='<%=rs.getString("tel") %>' required>
 								</td>
 							</tr>
 							<tr>
-								<th><label for="title">문의 제목</label></th>
-								<td><input type="text" name="title" id="title" placeholder="제목 입력" class="in_data" required></td>
+								<th><label for="title">문의사항</label></th>
+								<td><input type="text" name="title" id="title" placeholder="문의사항 입력" class="in_data" maxlength="100" required></td>
 							</tr>
 							<tr>
 								<th><label for="content">문의 내용</label></th>
 								<td>
-									<textarea cols="100" rows="6" name="content" id="content" placeholder="내용 입력" class="in_data2"></textarea>
+									<textarea cols="100" rows="6" name="content" id="content" placeholder="문의 내용 입력" maxlength="600" required class="in_data2"></textarea>
 								</td>
 							</tr>
 						</tbody>
 					</table>
 					<div class="btn_group">
 						<button type="submit" class="btn primary">문의하기</button>
-						<a href="qnaList.jsp" class="btn primary">질문 및 답변으로</a>
+						<a href="qnaList.jsp" class="btn primary">QnA 목록</a>
 					</div>
 				</form>
 			</div>
