@@ -17,7 +17,7 @@
     /* content */
     .vs { clear:both; width: 100%; height:300px; overflow: hidden; }
     .vs img { display:block; width: 100%; height:auto; }
-    .bread { clear:both; width: 100%; line-height: 60px; border-bottom:3px solid #eee; }
+    .bread { clear:both; width: 100%; line-height: 60px; border-bottom:3px solid #fff; font-size:13px; }
     .bread_fr { width: 1200px; margin: 0 auto; }
     .page { clear:both; width: 100%; min-height:100vh;}
     .page:after { content:""; display:block; clear:both; }
@@ -45,8 +45,8 @@
 	.btn_group .btn.primary { background-color:#fff; color:#000; margin-left: 200px; }
 	.btn_group .btn.primary:hover { background-color:#fff; color:#fff; }
 	.in_data { display:block; float:left; line-height:36px; padding-left:6px; 
-	min-width:740px; color:#000;}
-	textarea { padding:6px; color:#000;}
+	min-width:740px; color:#000; border-color:transparent;}
+	textarea { padding:6px; color:#000; border-color:transparent;}
     </style>
     <link rel="stylesheet" href="./css/footer.css">
 	<title>답변 작성 하기</title>

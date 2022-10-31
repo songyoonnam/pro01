@@ -16,7 +16,7 @@
     /* content */
     .vs { clear:both; width: 100%; height:300px; overflow: hidden; }
     .vs img { display:block; width: 100%; height:auto; }
-    .bread { clear:both; width: 100%; line-height: 60px; border-bottom:3px solid #eee; }
+    .bread { clear:both; width: 100%; line-height: 60px; border-bottom:3px solid #fff; font-size:13px; }
     .bread_fr { width: 1200px; margin: 0 auto; }
     .page { clear:both; width: 100%; min-height:100vh;}
     .page:after { content:""; display:block; clear:both; }
@@ -26,7 +26,7 @@
     .home { color:#333; }
 
     .frm1 { padding: 24px; width: 960px; margin:50px auto; }
-    .tb { display:table; margin:40px auto; width:900px; border-collapse:collapse; }
+    .tb { display:table; margin:40px auto; width:900px; border-collapse:collapse; font-size:13px; }
     .tb tr { display:table-row; }
     .tb td, .tb th { display:table-cell; }
     .tb th { height: 48px; border-bottom:1px solid #000;  border-right: 1px solid #000; color:#000; background-color:#fff; 
